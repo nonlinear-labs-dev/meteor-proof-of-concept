@@ -1,0 +1,332 @@
+@font-face {
+	font-family: 'nonlinearfont';
+	src: url('/SourceSansProLW25-Regular.otf');
+}
+
+.screen {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	background-color:black;
+	color:white;
+	left:0;
+	top:0;
+	perspective: 500px;
+	perspective-origin: 50% 50%;
+	overflow: hidden;
+	touch-action: none;
+	display: flex;
+	font-family: nonlinearfont;
+}
+
+.real-world-pane {
+	width: 100%;
+	height: 100%;
+}
+
+.move-pane {
+	position:absolute;
+	left:0%;
+	top:0;
+	width:100%;
+	height:100%;	
+}
+
+.zoom-pane {
+	position:absolute;
+	left:0%;
+	top:0;
+	width:100%;
+	height:100%;	
+}
+
+.world {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color:black;
+	left:0;
+	top:0;
+	display:flex;
+	justify-content: center;
+	align-content: center;
+	align-items:center;
+}
+
+.parameter-editor {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.parameter-group {	
+	display:block;
+	position: relative;	
+	border: 1px solid white;
+	flex-direction:column;
+	margin: 5mm;
+	border-radius: 2.5mm;
+	overflow:hidden;
+}
+
+.play-controls-and-macros {
+	padding:0;
+	margin:0;
+	display: flex;
+	flex-direction:column;
+	align-items:flex-end;
+}
+
+.play-controls {
+	padding:0;
+	margin:0;
+	display: flex;
+	flex-direction: row;
+}
+
+.parameter-group.hardware_source {
+	padding:0;
+	margin:0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-right: none;
+}
+
+.parameter-group.hardware_amount {
+	padding:0;
+	margin:0;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-left: none;
+}
+
+.parameter-group.hardware_source .group-title > span {
+	display: none;
+}
+
+.parameter-group.macro_control {
+	padding:0;
+	margin:0;
+	margin-top: 1cm;
+}
+
+.sound-parameters {
+	display:flex;
+	flex-direction: row;
+	align-items:center;
+}
+
+.envelopes {
+	display: flex;
+	flex-direction:column;
+	align-items: flex-end;
+}
+
+.effects {
+	display: flex;
+	flex-direction:column;
+	align-items: flex-start;
+}
+
+.flanger {
+	flex-grow: 0;
+}
+
+.cabinet-and-gap, .echo-and-reverb, .unison-master-scale {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+div.group-title {
+	position:relative;
+	text-align: center;
+	height: 5mm;
+	font-size: 3mm;
+	line-height: 5mm;
+	background-color: darkgray;
+}
+
+div.parameter-group div.parameters {
+	position:relative;
+	display:flex;
+	background-color: black;
+}
+
+div.parameter-column {
+	position:relative;
+	top:5%;
+	width:100%;
+	height:100%;
+}
+
+.parameter {
+	position: relative;
+	text-align:center;
+	width:2cm;
+	background-color: #444444;
+	margin:1px;
+}
+
+div.param-title {
+	position: relative;
+	text-align: center;
+	height:3mm;
+	line-height:3mm;
+	font-size:1.5mm;
+	background-color: #666666;
+}
+
+div.param-value {
+	position: relative;
+	text-align: center;
+	height:2mm;
+	line-height:2mm;
+	font-size:1.5mm;
+}
+
+.parameter .big-knob svg {
+	width: 1cm;
+	height: 1cm;	
+}
+
+.parameter .small-knob svg {
+	width: 7.5mm;
+	height: 7.5mm;	
+}
+
+.parameter .small-horizontal-slider svg {
+	width: 10mm;
+	height: 2mm;	
+}
+
+.parameter .small-horizontal-slider {
+	position:relative;
+	display:flex;
+	flex-direction: column;
+	align-items:center;	
+}
+
+.parameter .big-horizontal-slider svg {
+	width: 10mm;
+	height: 4mm;	
+}
+
+.parameter .big-horizontal-slider {
+	position:relative;
+	display:flex;
+	flex-direction: column;
+	align-items:center;	
+}
+
+.knob {
+	position: relative;
+	padding-top: 2mm;
+}
+
+.knob svg circle.indicator {
+	stroke-width:15px;
+	stroke:#444466;
+}
+
+.knob svg circle.indicator-background {
+	stroke: #111111;
+	stroke-width:17;
+}
+
+.knob svg circle {
+	fill:transparent;
+}
+
+.knob svg circle.center {
+	fill:#444466;
+	stroke:#111111;
+	stroke-width:1;
+}
+
+.knob svg rect.needle {
+	stroke: #111111;
+	stroke-width: 1px;
+	fill:#ffffff;
+}
+
+.vertical-slider svg .indicator {
+	fill: red;
+}
+
+.small-horizontal-slider svg .indicator {
+	fill: red;
+}
+
+.big-horizontal-slider svg .indicator {
+	fill: red;
+}
+
+
+.parameter.currentParameter * {
+	background-color: gray;
+}
+
+.comb_filter .parameter .knob svg .indicator {
+	stroke: yellow;	
+}
+
+.comb_filter .parameter .knob svg .center {
+	fill: yellow;	
+}
+
+.state_variable_filter .parameter .knob svg .indicator {
+	stroke: green;	
+}
+
+.state_variable_filter .parameter .knob svg .center {
+	fill: green;	
+}
+
+.feedback_mixer .parameter .knob svg .indicator {
+	stroke: red;	
+}
+
+.feedback_mixer .parameter .knob svg .center {
+	fill: red;	
+}
+
+.output_mixer .parameter .knob svg .indicator {
+	stroke: white;	
+}
+
+.output_mixer .parameter .knob svg .center {
+	fill: white;	
+}
+
+#fixedButtons {
+	position: fixed;
+	left:0vw;
+	top:0vh;
+	z-index:10;
+}
+
+.bank {
+	position: absolute;
+	z-index:10000;
+	left: 100px;
+	top: 100px;
+	background-color: gray;
+}
+
+.bank .title {
+	background-color: #222222;
+}
+
+.bank .presets {
+	display: block;
+	padding:0;
+	margin:0;
+}
+
+.bank .presets .preset {
+	display: block;
+	padding:0;
+	margin:0;
+}

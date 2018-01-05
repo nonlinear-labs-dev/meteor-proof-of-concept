@@ -1,0 +1,12 @@
+{
+  "name": "webui",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "jsondiffpatch": "^0.2.5",
+    "meteor-node-stubs": "^0.3.2"
+  }
+}

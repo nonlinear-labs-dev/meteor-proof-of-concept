@@ -1,0 +1,190 @@
+<head>
+  <title>Nonlinear Maps</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
+</head>
+
+<body>
+</body>
+
+<template name="basicLayout">
+	{{> yield}}
+</template>
+
+<template name="screen">
+	<div id="fixedButtons">
+		<button id="importCSV">Import CSV</button>
+		<button id="undo">Undo</button>
+		<button id="redo">Redo</button>
+		</div>
+	<div class="screen">
+		<div class="real-world-pane">
+			<div class="move-pane">
+				<div class="zoom-pane">
+					<div class="world">
+						{{ > parameterEditor }}
+						{{ #each getBanks }}
+							{{ > bank }}
+						{{ /each }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="bank">
+	<div class="bank" style="left: {{getLeft}}px; top: {{getTop}}px">
+		<div class="title">{{ title }}</div>
+		<ul class="presets">
+			{{ #each getPresets }}
+				{{ > preset }}
+			{{ /each }}
+		</ul>
+	</div>
+</template>
+
+<template name="preset">
+	<li class="preset">
+		<span class="title"><input type="text" value="{{ info.title }}"></span>
+	</li>
+</template>
+
+<template name="parameterEditor">
+	<div class="parameter-editor">
+		<div class="play-controls-and-macros">
+			<div class="play-controls">
+				{{ > parameterGroup _id="hardware_source"}}
+				{{ > parameterGroup _id="hardware_amount"}}
+			</div>
+			{{ > parameterGroup _id="macro_control"}}
+		</div>
+		<div class="sound-parameters">
+			<div class="envelopes">
+			{{ > parameterGroup _id="envelope_a"}}
+			{{ > parameterGroup _id="envelope_c"}}
+			{{ > parameterGroup _id="envelope_b"}}
+			</div>
+			<div class="oscillators">
+				{{ > parameterGroup _id="oscillator_a"}}
+				{{ > parameterGroup _id="shaper_a"}}
+				{{ > parameterGroup _id="shaper_b"}}
+				{{ > parameterGroup _id="oscillator_b"}}
+			</div>
+			<div class="mixers-and-filters">
+				{{ > parameterGroup _id="feedback_mixer"}}
+				{{ > parameterGroup _id="comb_filter"}}
+				{{ > parameterGroup _id="state_variable_filter"}}
+				{{ > parameterGroup _id="output_mixer"}}
+			</div>
+			<div class="effects">
+				{{ > parameterGroup _id="flanger"}}
+				<div class="cabinet-and-gap">
+					{{ > parameterGroup _id="cabinet"}}
+					{{ > parameterGroup _id="gap_filter"}}
+				</div>
+				<div class="echo-and-reverb">
+					{{ > parameterGroup _id="echo"}}
+					{{ > parameterGroup _id="reverb"}}
+				</div>
+				<div class="unison-master-scale">
+					{{ > parameterGroup _id="unison"}}
+					{{ > parameterGroup _id="master"}}
+					{{ > parameterGroup _id="scale"}}
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="parameterGroup">
+	<div class="parameter-group {{ _id }}">
+		<div class="group-title"><span>{{ getGroupName }}</span></div>
+		<div class="parameters">
+			{{ #each getColumns }}
+				{{ > parameterColumn }}
+			{{ /each }}
+		</div>		
+	</div>
+</template>
+
+<template name="parameterColumn">
+	<div class="parameter-column">
+		{{ #each getRows }}
+			{{ > parameter }}
+		{{ /each }}
+	</div>
+</template>
+
+<template name="parameter">
+	<div class="parameter {{_id}}">
+		<div class="param-title">{{ getParameterName }}</div>
+		{{ #if isBigKnob }}
+			{{ > bigKnob }}
+		{{ else if isVertSlider }}
+			{{ > verticalSlider }}
+		{{ else if isSmallKnob }}
+			{{ > smallKnob }}
+		{{ else if isSmallHorizontalSlider }}
+			{{ > smallHorizontalSlider }}
+		{{ else  }}
+			{{ > bigHorizontalSlider }}
+		{{ /if }}
+	</div> 
+</template>
+
+<template name="bigKnob">
+	<div class="big-knob knob">
+		<svg viewBox="0 0 100 100">
+			<circle transform="rotate(90, 50, 50)" class="indicator-background" cx="50" cy="50" r="40" stroke-dasharray="{{getBackgroundDashArray}}"/>
+  		<circle transform="rotate(90, 50, 50)" class="indicator" cx="50" cy="50" r="40" stroke-dasharray="{{getIndicatorDashArray}}"/>
+  		<circle class="center" cx="50" cy="50" r="7"/>
+  		<rect class="needle" 	x="57" y="48" width="41" height="4" transform="rotate({{ getAngle }}, 50, 50)"/>
+  	</svg>
+	</div>
+	<div class="param-value">{{ getParameterValue }}</div>
+</template>
+
+<template name="verticalSlider">
+	<div class="vertical-slider">
+		<svg viewBox="0 0 100 100">
+			<rect class="indicator-background" x="44" y="0" width="12" height="100"/>
+  		<rect class="indicator" x="45" y="{{getIndicatorTop}}" width="10" height="{{getIndicatorHeight}}"/>
+  	</svg>
+	</div>
+	<div class="param-value">{{ getParameterValue }}</div>
+</template>
+
+<template name="smallKnob">
+	<div class="small-knob knob">
+		<svg viewBox="0 0 100 100">
+			<circle transform="rotate(90, 50, 50)" class="indicator-background" cx="50" cy="50" r="32" stroke-dasharray="{{getBackgroundDashArray}}"/>
+  		<circle transform="rotate(90, 50, 50)" class="indicator" cx="50" cy="50" r="32" stroke-dasharray="{{getIndicatorDashArray}}"/>
+  		<circle class="center" cx="50" cy="50" r="7"/>
+  		<rect class="needle" 	x="57" y="48" width="30" height="4" transform="rotate({{ getAngle }}, 50, 50)"/>
+  	</svg>
+	</div>
+	<div class="param-value">{{ getParameterValue }}</div>
+</template>
+
+
+<template name="smallHorizontalSlider">
+	<div class="small-horizontal-slider">
+		<svg viewBox="0 0 100 10">
+			<rect class="indicator-background" x="0" y="0" width="100" height="10"/>
+  		<rect class="indicator" x="1" y="1" width="{{getIndicatorWidth}}" height="8"/>
+  	</svg>
+	</div>
+	<div class="param-value">{{ getParameterValue }}</div>
+</template>
+
+<template name="bigHorizontalSlider">
+	<div class="big-horizontal-slider">
+		<svg viewBox="0 0 100 10">
+			<rect class="indicator-background" x="0" y="0" width="100" height="10"/>
+  		<rect class="indicator" x="1" y="1" width="{{getIndicatorWidth}}" height="8"/>
+  	</svg>
+	</div>
+	<div class="param-value">{{ getParameterValue }}</div>
+</template>
